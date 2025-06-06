@@ -1,4 +1,8 @@
 ## Тестовые задания Tenzor 
+  
+```bash
+git clone https://github.com/Impuls64/tenzor
+```
 
 ### Для запуска заданий использовал следующие команды:
 
