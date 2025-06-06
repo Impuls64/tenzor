@@ -38,18 +38,18 @@ def clean_directory(root_dir: str, src_path: str):
             logging.info(f"Удалена директория: {item}")
 
 def find_source_files(src_dir: str) -> List[str]:
-    """Находит все файлы с нужными расширениями в директории и поддиректориях"""
+    """Находит файлы с нужными расширениями только в указанной директории"""
     extensions = ('.py', '.js', '.sh')
     source_files = []
     
-    for root, _, files in os.walk(src_dir):
-        for file in files:
-            if file.endswith(extensions):
-                # Получаем относительный путь от src_dir
-                rel_path = os.path.relpath(os.path.join(root, file), src_dir)
-                # Заменяем разделители путей на / для consistency
-                rel_path = rel_path.replace(os.sep, '/')
-                source_files.append(rel_path)
+    try:
+        for item in os.listdir(src_dir):
+            item_path = os.path.join(src_dir, item)
+            if os.path.isfile(item_path) and item.lower().endswith(extensions):
+                source_files.append(item)
+    except Exception as e:
+        logging.error(f"Ошибка при поиске файлов: {str(e)}")
+        raise
     
     return sorted(source_files)
 
